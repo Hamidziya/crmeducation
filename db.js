@@ -3,7 +3,7 @@
 const mysql = require('mysql');
 
 // MongoDB connection URL
-//const mongoURL = 'mongodb://127.0.0.1:27017/local';
+const mongoURL = 'mongodb://127.0.0.1:27017/local';
 
 // Function to connect to MongoDB
 // const connectDB = async () => {
