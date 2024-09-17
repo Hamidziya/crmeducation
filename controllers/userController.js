@@ -37,7 +37,7 @@ exports.createUser = async (req, res) => {
 // Update user by ID
 exports.updateUser = async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.body.id);
     if (user) {
       await user.update(req.body);
       res.json(user);

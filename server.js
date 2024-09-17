@@ -1,17 +1,20 @@
-// Importing required modules
-const app = require('./app');
-const { sequelize } = require('./config/database');
+const express = require('express');
+const sequelize = require('./config/database').sequelize; // Import sequelize instance
+const app = require('./app'); // Import the app with routes and middleware
 
-// Sync Sequelize models with MySQL and start the server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
-sequelize.sync()
-  .then(() => {
-    console.log('All models were synchronized successfully.');
+(async () => {
+  try {
+    // Sync the database schema with the models
+    await sequelize.sync({ alter: true });  // This will update the table schema without dropping it
+    console.log('Database synchronized successfully.');
+
+    // Start the server
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
-  })
-  .catch(err => {
-    console.error('Error syncing models:', err);
-  });
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+})();
