@@ -9,7 +9,7 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ where: { username } });
     if (!user || !(await user.validatePassword(password))) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Wrong Password' });
     }
 
     const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '24h' });
@@ -29,7 +29,7 @@ exports.register = async (req, res) => {
       if (user) {
         // If user exists, validate password
         if (!(await user.validatePassword(password))) {
-          return res.status(401).json({ message: 'Invalid credentials' });
+          return res.status(401).json({ message: 'Wrong Password' });
         }
       } else {
         // If user does not exist, create a new user
